@@ -295,7 +295,7 @@ with st.sidebar:
     st.header("全局设置")
     cfg["curriculum"] = st.selectbox("课程体系", ["国内课程","国际课程"])
     cfg["grade"] = st.selectbox("年级", ["初一","初二","初三","高一","高二","高三"])
-    cfg["subject"] = st.selectbox("学科", ["数学","物理","化学","经济","语文","英语"])
+    cfg["subject"] = st.selectbox("学科", ["数学","物理","化学","经济","语文","英语","道法","历史"])
     cfg["intensity"] = st.selectbox("启发强度", ["少","标准","多"])
     cfg["思辨追问开关"] = st.checkbox("开启思辨追问", value=cfg["思辨追问开关"])
     st.divider()
