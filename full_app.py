@@ -110,7 +110,7 @@ def detect_full_note_request(text:str) -> bool:
 
 # ===================== 题目引导模块【更新系统提示：平静简洁，少术语，术语附带通俗解释】 =====================
 def render_question_module():
-    st.subheader("启发式题目")
+    st.subheader("题目思路引导")
     qs = st.session_state["q_session"]
 
     qs["question"] = st.text_area("题目", value=qs["question"], height=120, disabled=False)
@@ -119,9 +119,9 @@ def render_question_module():
 
     col1, col2, col3 = st.columns([1,1,1])
     with col1:
-        btn_next = st.button("给我下一层提示")
+        btn_next = st.button("给我下一步提示")
     with col2:
-        btn_reset = st.button("重置本会话")
+        btn_reset = st.button("重置本对话")
     with col3:
         btn_review = st.button("进入复盘(第5级)")
 
@@ -188,7 +188,7 @@ def render_question_module():
 # ===================== 知识点梳理模块（三种模式） =====================
 def render_knowledge_module():
     ks = st.session_state.k_session
-    st.subheader("知识点整理梳理")
+    st.subheader("知识点梳理")
     ks["input_text"] = st.text_input("输入知识点/专题/需要辨析的概念", value=ks["input_text"])
     mode_sel = st.radio("工作模式", ["提纲生成","概念辨析","单元专题框架"], horizontal=True)
     ks["mode"] = mode_sel
