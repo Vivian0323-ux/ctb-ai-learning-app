@@ -110,7 +110,7 @@ def detect_full_note_request(text:str) -> bool:
 
 # ===================== 题目引导模块【更新系统提示：平静简洁，少术语，术语附带通俗解释】 =====================
 def render_question_module():
-    st.subheader("📖 启发式题目")
+    st.subheader("启发式题目")
     qs = st.session_state["q_session"]
 
     qs["question"] = st.text_area("题目", value=qs["question"], height=120, disabled=False)
@@ -301,7 +301,7 @@ with st.sidebar:
     cfg["intensity"] = st.selectbox("启发强度", ["少","标准","多"])
     cfg["思辨追问开关"] = st.checkbox("开启思辨追问", value=cfg["思辨追问开关"])
     st.divider()
-    st.caption("⚠️ 刷新页面全部数据丢失")
+    st.caption("⚠️ 刷新页面数据全部丢失")
 
 # ===================== 主页面布局 + 顶部常驻警示 =====================
 st.markdown("""
