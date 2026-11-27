@@ -8,7 +8,7 @@ MODEL_ID = st.secrets["MODEL_ID"]
 BASE_URL = st.secrets["BASE_URL"]
 # =====================================================================================
 
-st.set_page_config(page_title="启发式AI学习助手｜CTB完整版", layout="wide")
+st.set_page_config(page_title="启发式AI学习助手", layout="wide")
 
 # 移动端适配（放在set_page_config之后）
 st.markdown("""
@@ -113,7 +113,7 @@ def render_question_module():
     st.subheader("📖 启发式题目")
     qs = st.session_state["q_session"]
 
-    qs["question"] = st.text_area("已知的题目", value=qs["question"], height=120, disabled=False)
+    qs["question"] = st.text_area("题目", value=qs["question"], height=120, disabled=False)
     student_input = st.text_area("写下你的想法：想到了什么，有什么思路？", value=qs["student_answer"], height=140)
     qs["student_answer"] = student_input
 
@@ -183,12 +183,12 @@ def render_question_module():
     if len(qs["history"]) > 0:
         last = qs["history"][-1]
         st.write(last["ai"])
-        st.info("💡 你可以继续在上方输入框补充你的新思考，再次点击【给我下一层提示】继续提问")
+        st.info("你可以继续在上方输入框补充你的新思考，再次点击【给我下一层提示】继续提问")
 
 # ===================== 知识点梳理模块（三种模式） =====================
 def render_knowledge_module():
     ks = st.session_state.k_session
-    st.subheader("🧩 知识点整理梳理")
+    st.subheader("知识点整理梳理")
     ks["input_text"] = st.text_input("输入知识点/专题/需要辨析的概念", value=ks["input_text"])
     mode_sel = st.radio("工作模式", ["提纲生成","概念辨析","单元专题框架"], horizontal=True)
     ks["mode"] = mode_sel
@@ -237,7 +237,7 @@ def render_knowledge_module():
 
 # ===================== 在线笔记模块（简易版本快照、润色拦截） =====================
 def render_note_module():
-    st.subheader("📝 在线笔记")
+    st.subheader("在线笔记")
     note_list = st.session_state.note_store
     opt = ["新建笔记"] + [f'[{n["note_id"]}] {n["title"]}' for n in note_list]
     sel = st.selectbox("选择笔记", opt)
@@ -301,7 +301,7 @@ with st.sidebar:
     cfg["intensity"] = st.selectbox("启发强度", ["少","标准","多"])
     cfg["思辨追问开关"] = st.checkbox("开启思辨追问", value=cfg["思辨追问开关"])
     st.divider()
-    st.caption("⚠️ 内存演示：刷新页面全部数据丢失")
+    st.caption("⚠️ 刷新页面全部数据丢失")
 
 # ===================== 主页面布局 + 顶部常驻警示 =====================
 st.markdown("""
@@ -310,7 +310,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-tab_q, tab_k, tab_n = st.tabs(["📖题目思路引导","🧩知识点梳理","📝在线笔记"])
+tab_q, tab_k, tab_n = st.tabs(["题目思路引导","知识点梳理","在线笔记"])
 with tab_q:
     render_question_module()
 with tab_k:
