@@ -108,13 +108,13 @@ def detect_full_note_request(text:str) -> bool:
     kw = ["帮我写完整笔记","直接写笔记","生成完整笔记","全部写好"]
     return any(k in text for k in kw)
 
-# ===================== 题目引导模块【已修改：不限次数，持续多轮启发，严禁输出答案】 =====================
+# ===================== 题目引导模块【更新系统提示：平静简洁，少术语，术语附带通俗解释】 =====================
 def render_question_module():
     st.subheader("📖 启发式题目")
     qs = st.session_state["q_session"]
 
     qs["question"] = st.text_area("已知的题目", value=qs["question"], height=120, disabled=False)
-    student_input = st.text_area("写下你的想法：想到了什么，在哪？", value=qs["student_answer"], height=140)
+    student_input = st.text_area("写下你的想法：想到了什么，有什么思路？", value=qs["student_answer"], height=140)
     qs["student_answer"] = student_input
 
     col1, col2, col3 = st.columns([1,1,1])
@@ -147,9 +147,10 @@ def render_question_module():
 2. 不替学生计算、不列出完整解方程步骤；
 3. 只使用提问、点拨、指出思维漏洞、引导分类的方式启发学生自己思考；
 4. 根据学生当前给出的思路，针对性追问，引导他发现自己哪里考虑不周；
-5. 输出风格简短，贴合高中十年级学生，不要长篇大论；
-6. 如果学生思路跑偏，温和指出方向问题，继续引导，不要直接纠正到底；
-7. 禁止出现“答案是”“解得”“x=”“a=”这类字样。
+5. 语气平静克制，简洁直白，不要夸赞、客套话，不要多余铺垫；
+6. 尽量少用专业术语；如果必须使用术语，紧跟着用简单口语解释；
+7. 如果学生思路跑偏，平和指出方向问题，继续引导，不要直接给出结论；
+8. 禁止出现“答案是”“解得”“x=”“a=”这类字样。
 """
         user_prompt = f"""
 题目：{qs["question"]}
@@ -206,6 +207,7 @@ def render_knowledge_module():
         }
         sys_p = f"""你是学习助手，面向{cfg['curriculum']} {cfg['grade']} {cfg['subject']}学生。
 硬性约束：禁止生成完整可直接抄写的成品笔记，只输出框架/提纲素材，学生自己填充内容。
+语气简洁平实，少用专业术语，术语附带通俗解释。
 {mode_instr[ks['mode']]}
 """
         usr_p = f"用户输入：{ks['input_text']}"
@@ -280,7 +282,7 @@ def render_note_module():
                     current_note["content"] = sel_ver["content"]
                     st.rerun()
             if btn_polish:
-                sys_p = """你是笔记润色助手。只优化语句通顺度、排版逻辑。严禁大面积重写、不能替换学生原有核心想法，不能替学生写新内容。润色结束输出1‑2个思辨思考题。"""
+                sys_p = """你是笔记润色助手。只优化语句通顺度、排版逻辑。严禁大面积重写、不能替换学生原有核心想法，不能替学生写新内容。语言平实简洁。润色结束输出1‑2个思辨思考题。"""
                 usr_p = f"笔记原文：{current_note['content']}"
                 out, err = stream_ai_call(sys_p, usr_p)
                 if err:
